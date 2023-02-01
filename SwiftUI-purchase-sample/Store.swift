@@ -59,3 +59,35 @@ extension Store: SKProductsRequestDelegate {
         }
     }
 }
+
+extension Store: SKPaymentTransactionObserver {
+    func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
+        for transaction in transactions {
+            var finishTransaction = false
+            
+            switch transaction.transactionState {
+                
+                case .purchased, .restored:
+                    completeedPurchases.append(transaction.payment.productIdentifier)
+                    finishTransaction = true
+                case .failed:
+                    finishTransaction = true
+                case .deferred, .purchasing:
+                    break;
+                @unknown default:
+                    break;
+                }
+            
+            if finishTransaction {
+                SKPaymentQueue.default().finishTransaction(transaction)
+                DispatchQueue.main.async {
+                    self.purchasesCompleteHandler?(transaction)
+                    self.purchasesCompleteHandler = nil
+                }
+                
+            }
+        }
+    }
+    
+    
+}
