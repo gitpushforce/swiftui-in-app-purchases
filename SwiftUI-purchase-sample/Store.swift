@@ -32,8 +32,30 @@ class Store: NSObject, ObservableObject {
     }
     
     private var productsRequest: SKProductsRequest?
-    private var fetchedProducs = [SKProduct]()
+    private var fetchedProducts = [SKProduct]()
     private var fetchCompleteHandler: FetchCompleteHandler?
     private var purchasesCompleteHandler: PurchasesCompleteHandler?
-    
+}
+
+extension Store: SKProductsRequestDelegate {
+    func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
+        let loadedProducts = response.products
+        let invalidProducts = response.invalidProductIdentifiers
+        
+        guard !loadedProducts.isEmpty else {
+            print("can't load the products")
+            if !invalidProducts.isEmpty {
+                print("invalid products found: \(invalidProducts)")
+            }
+            productsRequest = nil
+            return
+        }
+        
+        fetchedProducts = loadedProducts
+        DispatchQueue.main.async {
+            self.fetchCompleteHandler?(loadedProducts)
+            self.fetchCompleteHandler = nil
+            self.productsRequest = nil
+        }
+    }
 }
