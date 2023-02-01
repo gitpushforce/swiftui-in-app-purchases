@@ -15,8 +15,8 @@ class Store: NSObject, ObservableObject {
     @Published var allBooks = [Books]()
     
     private let allIdendifiers = Set([
-        "com.slothius.store.libro1",
-        "com.slothius.store.libro2",
+        "com.slothius.store.book1",
+        "com.slothius.store.book2",
         "com.slothius.store.fullaccess"
     ])
     
