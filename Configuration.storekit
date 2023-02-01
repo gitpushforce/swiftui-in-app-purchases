@@ -1,0 +1,81 @@
+{
+  "identifier" : "4A021BB4",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : false,
+      "internalID" : "99E2970C",
+      "localizations" : [
+        {
+          "description" : "book written by its author",
+          "displayName" : "book1",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.slothius.store.book1",
+      "referenceName" : "book1",
+      "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "1.99",
+      "familyShareable" : false,
+      "internalID" : "3CA0ADDC",
+      "localizations" : [
+        {
+          "description" : "nice book",
+          "displayName" : "book2",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.slothius.store.book2",
+      "referenceName" : "book2",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "79AE97F2",
+      "localizations" : [
+
+      ],
+      "name" : "Full Access",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "2.99",
+          "familyShareable" : true,
+          "groupNumber" : 1,
+          "internalID" : "0085F2A3",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "",
+              "displayName" : "",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "com.slothius.store.fullaccess",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Full Access",
+          "subscriptionGroupID" : "79AE97F2",
+          "type" : "RecurringSubscription"
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 2,
+    "minor" : 0
+  }
+}
