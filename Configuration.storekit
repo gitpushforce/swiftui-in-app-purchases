@@ -60,8 +60,8 @@
           "introductoryOffer" : null,
           "localizations" : [
             {
-              "description" : "",
-              "displayName" : "",
+              "description" : "Full access too all books",
+              "displayName" : "Full Access",
               "locale" : "en_US"
             }
           ],

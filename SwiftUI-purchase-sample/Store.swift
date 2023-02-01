@@ -35,6 +35,33 @@ class Store: NSObject, ObservableObject {
     private var fetchedProducts = [SKProduct]()
     private var fetchCompleteHandler: FetchCompleteHandler?
     private var purchasesCompleteHandler: PurchasesCompleteHandler?
+    
+    override init() {
+        super.init()
+        startObservingPayment()
+        fetchProducts { products in
+            self.allBooks = products.map { Books(product: $0) }
+            
+        }
+    }
+    
+    private func startObservingPayment() {
+        SKPaymentQueue.default().add(self)
+    }
+    
+    private func fetchProducts(_ completion: @escaping FetchCompleteHandler) {
+        guard self.productsRequest == nil else { return }
+        fetchCompleteHandler = completion
+        productsRequest = SKProductsRequest(productIdentifiers: allIdendifiers)
+        productsRequest?.delegate = self
+        productsRequest?.start()
+    }
+    
+    private func buy(_ product: SKProduct, completion: @escaping PurchasesCompleteHandler) {
+        purchasesCompleteHandler = completion
+        let payment = SKPayment(product: product)
+        SKPaymentQueue.default().add(payment)
+    }
 }
 
 extension Store: SKProductsRequestDelegate {
@@ -88,6 +115,19 @@ extension Store: SKPaymentTransactionObserver {
             }
         }
     }
+}
+
+extension Store {
+    func product(for identifier: String) -> SKProduct? {
+        return fetchedProducts.first(where: { $0.productIdentifier == identifier })
+    }
     
+    func purchaseProduct(product: SKProduct) {
+        startObservingPayment()
+        buy(product) { _ in }
+    }
     
+    func restorePurchase() {
+        SKPaymentQueue.default().restoreCompletedTransactions()
+    }
 }
